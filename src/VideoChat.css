@@ -1,0 +1,44 @@
+.videochat.videochat__started {
+  position: fixed;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.534);
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+.videochat.videochat__started .videochat__closebtn {
+  position: absolute;
+  right: 8%;
+  top: 8%;
+  border-radius: 20px;
+  z-index: 101;
+}
+.videochat .videochat__startbtn {
+  position: fixed;
+  bottom: 8%;
+  right: 8%;
+}
+.videochat.videochat__started #videochat__personVideo {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 250px;
+  height: 200px;
+  border: 6px solid white;
+  z-index: 101;
+  border-radius: 15px;
+  object-fit: cover;
+}
+.videochat.videochat__started #videochat__friendVideo {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 450px;
+  border: 6px solid white;
+  z-index: 101;
+  border-radius: 15px;
+  object-fit: cover;
+}

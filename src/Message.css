@@ -1,0 +1,33 @@
+.message {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.message img {
+  width: 50px;
+  height: 50px;
+}
+.message_timestamp {
+  color: grey;
+  font-size: 13px;
+  font-weight: 300;
+}
+.message__userFile {
+  padding: 10px;
+  width: 200px !important;
+  height: 150px !important;
+}
+video {
+  width: 50%;
+  height: 50%;
+  padding: 15px;
+  border: none;
+  outline: none;
+}
+.message__info {
+  padding: 10px;
+}
+.message__info p {
+  padding-top: 4px;
+}

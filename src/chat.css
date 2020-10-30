@@ -1,0 +1,40 @@
+.chat {
+  padding: 10px;
+  flex: 0.7;
+}
+.chat__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid grey;
+}
+.chat__headerRight > p {
+  display: flex;
+  align-items: center;
+}
+.chat__channelName {
+  display: flex;
+  align-items: center;
+}
+.chat__headerRight > p > .MuiSvgIcon-root {
+  font-size: 20px;
+  padding-right: 5px;
+}
+
+.chat__channelName > .MuiSvgIcon-root {
+  margin-left: 10px;
+  font-size: 16px;
+}
+.chat__messages {
+  height: 70vh;
+  overflow-y: scroll;
+  padding: 12px;
+}
+.chat__messages .message {
+  padding: 10px;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}

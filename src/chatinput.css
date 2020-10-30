@@ -1,0 +1,46 @@
+.chatinput {
+  border-radius: 20px;
+  display: flex;
+}
+.chatinput > form > .chatmessagebox {
+  position: fixed;
+  bottom: 10px;
+  width: 70%;
+  border: 1px solid grey;
+  border-radius: 3px;
+  padding: 2px;
+  height: 45px;
+}
+.chatinput > form > button {
+  position: fixed;
+  right: 10px;
+  height: 45px;
+  background: rgb(61, 3, 61);
+  padding: 15px 35px;
+  border: none;
+  outline: none;
+  color: white;
+  bottom: 10px;
+}
+.chatinput > form > .fileInput{
+  position: fixed;
+  bottom: 60px;
+  width: 70px;
+  height: 70px;
+  background: purple;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.chatinput > form > .fileInput > .chatinput__file{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0;  cursor: pointer;
+}
+.chatinput > form > .fileInput > .MuiSvgIcon-root {
+position: absolute;
+left: 25%;
+top: 25%;
+color: white;
+font-size: 32px;
+}
