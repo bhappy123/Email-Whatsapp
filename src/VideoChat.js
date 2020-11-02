@@ -22,7 +22,7 @@ const VideoChat = ({ friendEmail }) => {
     const iceServer = {
         'iceServer': [
             { "urls": "stun:stun.services.mozilla.com" },
-            { "urls": "stun:stun.l.google.com:19302" }
+            { "urls": "stun:stun2.1.google.com:19302" }
         ]
     }
 
@@ -84,7 +84,7 @@ const VideoChat = ({ friendEmail }) => {
             navigator.mediaDevices.getUserMedia(streamConstrains)
                 .then(stream => {
                     setLocalStream(stream)
-                    console.log("caler local stream: ", stream.getTracks())
+                    // ! console.log("caler local stream: ", stream.getTracks())
                     document.querySelector('#localVideo').srcObject = stream
                 }).catch(err => console.log("error:", err))
         }
@@ -102,22 +102,22 @@ const VideoChat = ({ friendEmail }) => {
             if (callee === false && !offer && snapshot.data().offer.type === "offer") {
                 setOfferSDP(snapshot.data().offer)
                 setOffer(true)
-                console.log("offer: ", snapshot.data().offer);
+                // ! console.log("offer: ", snapshot.data().offer);
                 // If Offer Arived Then Say The Caller To Give Answer
             }
             if (callee === true && !answer && snapshot.data().answer.type === "answer") {
                 setAnswerSDP(snapshot.data().answer)
                 setAnswer(true)
-                console.log("answer: ", snapshot.data().answer);
+                // ! console.log("answer: ", snapshot.data().answer);
             }
             if (callee === true & !calleeIceCandidate && snapshot.data().CalleeIceCandidate.type === "candidate" && rtcPeerConnection) {
                 setCalleeIceCandidateValue(snapshot.data().CalleeIceCandidate);
                 setCalleeIceCandidate(true);
-                console.log(rtcPeerConnection)
+                // ! console.log(rtcPeerConnection)
                 // console.log("callee candidate value: ", calleeIceCandidateValue);
             }
             if (callee === false && !callerIceCandidate && snapshot.data().callericecandidate.type === "candidate") {
-                console.log("caller candidate value: ", snapshot.data());
+                // ! console.log("caller candidate value: ", snapshot.data());
                 setCallerIceCandidateValue(snapshot.data().callericecandidate);
                 setCallerIceCandidate(true);
             }
@@ -127,7 +127,7 @@ const VideoChat = ({ friendEmail }) => {
     useEffect(() => {
         const pconnection = new RTCPeerConnection(iceServer);
         setRtcPeerConnection(pconnection);
-        console.log(pconnection)
+        // ! console.log(pconnection)
     }, [])
 
 
@@ -138,7 +138,7 @@ const VideoChat = ({ friendEmail }) => {
                 (db.collection('videochatrooms').doc(roomId).update({
                     isJoined: true
                 }))
-                console.log("User Joined for callee", callee)
+                // ! console.log("User Joined for callee", callee)
             }
         }
     }, [roomId])
@@ -146,9 +146,9 @@ const VideoChat = ({ friendEmail }) => {
     // * Create a Offer If Caller Joined The room
     useEffect(() => {
         if (callerJoined) {
-            // console.log("User Joined", snapshot.data().isJoined)
+            // ! console.log("User Joined", snapshot.data().isJoined)
 
-            console.log("RTC PEER CONNECTION VALUE IS", rtcPeerConnection)
+            // ! console.log("RTC PEER CONNECTION VALUE IS", rtcPeerConnection)
             if (rtcPeerConnection) {
                 rtcPeerConnection.onicecandidate = onIceCandidate
                 rtcPeerConnection.ontrack = onAddTrack
@@ -156,7 +156,7 @@ const VideoChat = ({ friendEmail }) => {
                 rtcPeerConnection.createOffer()
                     .then(sessionDescription => {
                         rtcPeerConnection.setLocalDescription(sessionDescription)
-                        console.log("Offer desc: ", sessionDescription)
+                            // ! console.log("Offer desc: ", sessionDescription)
                             (db.collection('videochatrooms').doc(roomId).update({
                                 offer: {
                                     type: "offer",
@@ -181,6 +181,7 @@ const VideoChat = ({ friendEmail }) => {
             rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(offerSDP))
             rtcPeerConnection.createAnswer()
                 .then(sessionDescription => {
+                    console.log("Offer Session Description: ", sessionDescription)
                     rtcPeerConnection.setLocalDescription(sessionDescription)
                         (db.collection('videochatrooms').doc(roomId).update({
                             answer: {
@@ -189,7 +190,7 @@ const VideoChat = ({ friendEmail }) => {
                             }
                         }))
                 }).catch(err => {
-                    console.log("offer error: ", err)
+                    console.log("Answer error: ", err)
                 })
         }
     }, [offer])
@@ -207,20 +208,21 @@ const VideoChat = ({ friendEmail }) => {
 
     // * On Addition Of Stream Set Remote Video Object
     const onAddTrack = (event) => {
+        console.log("Remote Stream Value: ", event.streams[0]);
         document.querySelector('#remoteVideo').srcObject = event.streams[0]
-        // remoteStream.srcObject = event.streams[0]
+        // ! remoteStream.srcObject = event.streams[0]
     }
 
 
     // On Getting An Ice Candidate 
     useEffect(() => {
         if (calleeIceCandidateValue.type === "candidate") {
-            console.log("calleerIce Candidate rtcPeerConnection Value", rtcPeerConnection)
+            // ! console.log("calleerIce Candidate rtcPeerConnection Value", rtcPeerConnection)
             const iceCandidate = new RTCIceCandidate({
                 sdpMLineIndex: calleeIceCandidateValue.label,
                 candidate: calleeIceCandidateValue.candidate,
             })
-            console.log("calleeIceCandidate", iceCandidate)
+            // ! console.log("calleeIceCandidate", iceCandidate)
             rtcPeerConnection.addIceCandidate(iceCandidate);
         }
     }, [calleeIceCandidate])
@@ -240,7 +242,7 @@ const VideoChat = ({ friendEmail }) => {
     // * On Ice Candidate Function
     const onIceCandidate = (event) => {
         if (event.candidate) {
-            console.log("Sending Ice Candidate", event.candidate)
+            // ! console.log("Sending Ice Candidate", event.candidate)
             if (callee === true) {
                 (db.collection('videochatrooms').doc(roomId).update({
                     CalleeIceCandidate: {
